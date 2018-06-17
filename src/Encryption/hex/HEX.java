@@ -1,7 +1,7 @@
 package Encryption.hex;
 
 public class HEX {
-    /**将二进制转换成16进制
+    /**将二进制转换成16进制字符串
      * @param buf
      * @return
      */
@@ -16,7 +16,7 @@ public class HEX {
         }
         return sb.toString();
     }
-    /**将16进制转换为二进制
+    /**将16进制字符串转换为二进制
      * @param hexStr
      * @return
      */

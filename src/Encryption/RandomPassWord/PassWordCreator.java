@@ -1,5 +1,7 @@
 package Encryption.RandomPassWord;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Random;
 
 public class PassWordCreator {
@@ -9,12 +11,21 @@ public class PassWordCreator {
 	 * @return
 	 */
 	public static String createPassWord(int len){
-		int random = createRandomInt();
+		long random = createRandomInt();
 		return createPassWord(random, len);
 	}
 	
-	public static String createPassWord(int random,int len){
-		Random rd = new Random(random);
+	public static String createPassWord(long random,int len){
+		//Random rd = new Random(random);
+		//SecureRandom number = SecureRandom.getInstance("SHA1PRNG");
+		SecureRandom rd=null;
+		try {
+			rd=SecureRandom.getInstance("SHA1PRNG");
+			rd.setSeed(random);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}finally {
+		}
 		final int  maxNum = 62;
 		StringBuffer sb = new StringBuffer();
 		int rdGet;//取得随机数
@@ -34,20 +45,31 @@ public class PassWordCreator {
 		}
 		return sb.toString();
 	}
-	
-	public static int createRandomInt(){
+
+    /**
+     * 生成随机数种子，实际上这个函数没有被调用
+     * @return
+     */
+	public static long createRandomInt(){
 		//得到0.0到1.0之间的数字，并扩大100000倍
-		double temp = Math.random()*100000;
-		//如果数据等于100000，则减少1
+//		double temp = Math.random()*100000;
+        long temp= 0;
+        try {
+            temp = SecureRandom.getInstance("SHA1PRNG").nextInt(100000);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        //如果数据等于100000，则减少1
 		if(temp>=100000){
 			temp = 99999;
 		}
-		int tempint = (int)Math.ceil(temp);
+		long tempint = (int)Math.ceil(temp);
 		return tempint;
 	}
 	
 	public static void main(String[] args){
 		PassWordCreator pwc = new PassWordCreator();
-		System.out.println(pwc.createPassWord(128));
+		System.out.println(pwc.createPassWord(8));
+
 	}
 }

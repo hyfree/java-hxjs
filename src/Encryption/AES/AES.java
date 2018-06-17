@@ -33,7 +33,7 @@ public class AES{
                 Cipher cipher = Cipher.getInstance("AES");// 创建密码器
                 byte[] byteContent = content.getBytes("utf-8");
                 cipher.init(Cipher.ENCRYPT_MODE, key);// 初始化
-                byte[] result = cipher.doFinal(byteContent);// 加密
+                byte[] result = cipher.doFinal(byteContent);// DES
                 return result; // Encryption
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
@@ -47,8 +47,8 @@ public class AES{
                 e.printStackTrace();
             } catch (BadPaddingException e) {
                 e.printStackTrace();
-            }catch (Exception e){
-                e.printStackTrace();
+            }finally {
+
             }
             return null;
         }
