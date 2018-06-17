@@ -35,15 +35,32 @@ public class MyServer {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-
+            //检查释放
+            if (connection!=null)
             try {
                 connection.close();
-                writer.close();
-                serverSocket.close();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            //检查释放
+            if (writer!=null);
+            try {
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //检查释放
+            if (serverSocket!=null) {
+                try {
+                    serverSocket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
 
         }
     }
+
 }

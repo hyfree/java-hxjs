@@ -31,6 +31,7 @@ public class MyTest {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
+
             if (socket!=null)
             try {
                 socket.close();

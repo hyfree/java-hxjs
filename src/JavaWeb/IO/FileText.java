@@ -1,5 +1,7 @@
 package JavaWeb.IO;
 
+import Freed.QuickFreed;
+
 import java.io.*;
 
 public class FileText {
@@ -24,16 +26,19 @@ public class FileText {
         } catch (IOException e) {
 
         } finally {
+            if (bufferedWriter!=null)
             try {
                 bufferedWriter.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            if (outputStreamWriter!=null)
             try {
                 outputStreamWriter.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            if (fileOutputStream!=null)
             try {
                 fileOutputStream.close();
             } catch (IOException e) {
@@ -50,14 +55,23 @@ public class FileText {
     public static void writeTestByLine(String fileName, String content, boolean append) {
         // 方法一：获取系统的分行符号，在每次写入文本后，再写入一次分行符号
         String str = System.getProperty("line.separator");
+        FileWriter fw=null ;
         try {
-            FileWriter fw = new FileWriter(fileName, append);
+            fw = new FileWriter(fileName, append);
             fw.write(content);
             fw.write(str);//增加换行符
             fw.flush();
             fw.close();
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            if (fw!=null){
+                try {
+                    fw.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -77,13 +91,25 @@ public class FileText {
             }
 
         } catch (IOException e) {
-
+            System.out.println("IOE-202");
         } finally {
+            QuickFreed.freed(bufferedReader);
+
+            //检查释放bufferedReader
+            if (bufferedReader!=null)
             try {
                 bufferedReader.close();
                 fr.close();
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+            //检查释放fr
+            if (fr!=null){
+                try {
+                    fr.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
         }
